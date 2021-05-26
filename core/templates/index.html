@@ -1,0 +1,42 @@
+{% load static %}
+{% load bootstrap4 %}
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    {% bootstrap_css %}
+
+    <title>Gráfico Python/Django</title>
+    <style>
+      .body{
+        background: rgb(2,0,36);
+        background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(127,255,212,1) 35%, rgba(0,212,255,1) 100%);
+      }
+    </style>
+  </head>
+  <body class="body">
+    <div class="container">
+        <h1 class="text-dark text-center">Gráfico Python/Django</h1>
+    </div>
+
+    <div class="container">
+        <canvas id="grafico" width="500" height="400"></canvas>
+    </div>
+
+  {% bootstrap_javascript jquery='full' %}
+  <script type="text/javascript" src="{% static 'js/Chart.min.js' %}"></script>
+
+  <script type="text/javascript">
+      $.get('{% url "dados" %}', function(data){
+        var ctx = $("#grafico").get(0).getContext("2d");
+        new Chart(ctx, {
+            type: 'line', data: data
+        });
+      });
+  </script>
+  </body>
+</html>
